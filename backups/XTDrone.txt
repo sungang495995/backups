@@ -1,0 +1,25 @@
+##飞机仿真
+cd ~/PX4_Firmware
+roslaunch px4 indoor1.launch
+##VINs
+cd VINs_XTDrone
+bash scripts/xtdrone_run_vio.sh
+
+cd ~/XTDrone/sensing/slam/vio
+python vins_transfer.py iris 0
+
+cd ~/XTDrone/communication
+python multirotor_communication.py iris 0 
+
+cd ~/XTDrone/control/keyboard
+python multirotor_keyboard_control.py iris 1 vel 
+
+ego planner
+cd ~/XTDrone/motion_planning/3d
+python ego_transfer.py iris 0
+
+source /opt/ros/melodic/setup.bash
+cd ~/XTDrone/motion_planning/3d
+rviz -d ego_rviz.rviz
+
+roslaunch ego_planner single_uav.launch 
